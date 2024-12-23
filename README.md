@@ -57,3 +57,68 @@
 	                        ├─→ 可以互相访问
 设备B ─→ 检测网关 ─→ 修改路由 ─┘
 ```
+
+
+# AP-Isolation-Bypass
+Campus Network AP Isolation Solution - Solving the annoying problem of devices unable to communicate with each other within campus
+
+# How to Use the Exe
+Double-click to run. During automatic network card detection, you may need to press Enter. The program will automatically close after successfully configuring the routing table.
+You need to run the AP isolation bypass exe again every time you reconnect to the network or restart your computer.
+
+# Our Goal is to Solve the Problem of Two Devices Unable to Communicate Within Campus
+# Core Concept: Resetting Routing Rules Ourselves
+For example:
+- AP isolation is like "classroom rules prohibiting students from passing notes directly"
+- But all students can communicate with the teacher (gateway)
+- Modifying routes is equivalent to "having all notes passed through the teacher"
+- This bypasses the restriction of "students cannot pass notes directly"
+
+# Problem Introduction: AC AP Isolation
+When two computers are on the same floor, AP isolation is triggered, but normal access is possible when they are separated across different APs.
+
+>AP isolation is very similar to VLAN (Virtual Local Area Network) in wired networks. It completely isolates all wireless client devices from each other, allowing clients to only access the fixed network connected to the AP. In simple terms, this means connected wireless clients (such as phones, computers, etc.) cannot communicate with each other, preventing functions like file sharing between two computers connected to the same AP. Therefore, enabling this feature protects data security between different users and helps resist external attacks.
+
+# Let me explain the principle of AP isolation bypass in simple terms:
+
+1. Normal situation (with AP isolation)
+    - AP isolation prevents direct communication between devices under the same AP
+    - But all devices can communicate with the gateway
+  
+```
+Device A ←→ AP ←→ Device B
+❌
+Device A ←→ Device B
+```
+
+2. After route modification:
+    - Delete direct routes, force all communication through gateway
+    - Gateway becomes a "relay station" to help forward data packets
+  
+
+```
+Device A → Gateway → Device B
+Device B → Gateway → Device A
+```
+
+
+3. Specific principle:
+    - Default routing table makes devices try to communicate directly within the same network segment
+    - AP isolation prevents this direct communication
+    - After route modification, even same-segment communication goes through the gateway
+    - Gateway has no AP isolation restrictions and can forward to target devices
+
+**It's like**:
+- AP isolation is like "classroom rules prohibiting students from passing notes directly"
+- But all students can communicate with the teacher (gateway)
+- Modifying routes is equivalent to "having all notes passed through the teacher"
+- This bypasses the restriction of "students cannot pass notes directly"
+
+# How the Bypass Works
+
+
+```
+Device A ─→ Detect Gateway ─→ Modify Routes ─┐
+					     ├─→ Can access each other
+Device B ─→ Detect Gateway ─→ Modify Routes ─┘
+```
